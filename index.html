@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gestao-pro — Apresentação do Projeto</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e8eaed; min-height: 100vh; }
+
+  .slides { width: 100%; }
+  .slide { display: none; padding: 36px 40px; min-height: 460px; flex-direction: column; justify-content: flex-start; }
+  .slide.active { display: flex; }
+
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 40px; border-bottom: 1px solid #ffffff12; background: #0a0d13; }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #ffffff22; cursor: pointer; transition: background .2s; }
+  .dot.active { background: #6c8ef5; }
+  .nav-btns { display: flex; gap: 10px; }
+  .nav-btn { background: #ffffff10; border: 1px solid #ffffff18; color: #e8eaed; padding: 6px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: background .15s; }
+  .nav-btn:hover { background: #ffffff1e; }
+  .slide-count { font-size: 12px; color: #888; }
+
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-bottom: 14px; }
+  .tag.blue { background: #6c8ef522; color: #6c8ef5; }
+  .tag.green { background: #4caf5022; color: #4caf50; }
+  .tag.orange { background: #ff980022; color: #ff9800; }
+  .tag.purple { background: #ab47bc22; color: #ce93d8; }
+
+  h1 { font-size: 28px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+  h2 { font-size: 20px; font-weight: 700; margin-bottom: 18px; }
+  .subtitle { font-size: 14px; color: #9aa; line-height: 1.6; max-width: 580px; margin-bottom: 28px; }
+
+  .grid { display: grid; gap: 14px; }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+  .card { background: #ffffff08; border: 1px solid #ffffff12; border-radius: 10px; padding: 18px; }
+  .card-icon { font-size: 22px; margin-bottom: 10px; }
+  .card-title { font-size: 13px; font-weight: 600; color: #d0d4e0; margin-bottom: 6px; }
+  .card-desc { font-size: 12px; color: #7a8090; line-height: 1.55; }
+
+  .flow-step { background: #ffffff0a; border: 1px solid #ffffff14; border-radius: 8px; padding: 12px 16px; font-size: 12px; text-align: center; min-width: 110px; }
+  .flow-step .num { font-size: 18px; font-weight: 700; color: #6c8ef5; display: block; }
+
+  .stack-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .pill { display: flex; align-items: center; gap: 7px; background: #ffffff0a; border: 1px solid #ffffff14; border-radius: 20px; padding: 6px 14px; font-size: 12px; color: #c0c8d8; }
+  .pill-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .schema-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .schema-entity { background: #ffffff08; border: 1px solid #ffffff10; border-radius: 8px; padding: 12px; }
+  .schema-entity .entity-name { font-size: 12px; font-weight: 700; color: #6c8ef5; margin-bottom: 6px; }
+  .schema-entity .field { font-size: 11px; color: #6a7080; display: flex; justify-content: space-between; padding: 1px 0; }
+  .schema-entity .field .type { color: #4caf5066; font-size: 10px; }
+
+  .role-card { background: #ffffff08; border: 1px solid #ffffff12; border-radius: 10px; padding: 20px; }
+  .role-name { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .role-perm { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #9aa; margin-bottom: 6px; }
+  .check { color: #4caf50; }
+  .cross { color: #ef5350; }
+
+  .cover-badge { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .badge { font-size: 11px; background: #ffffff0d; border: 1px solid #ffffff18; border-radius: 5px; padding: 4px 10px; color: #888; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-dots" id="dots"></div>
+  <span class="slide-count" id="count">1 / 7</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="prev()">← Anterior</button>
+    <button class="nav-btn" onclick="next()">Próximo →</button>
+  </div>
+</nav>
+
+<div class="slides">
+
+  <!-- SLIDE 1: CAPA -->
+  <div class="slide active">
+    <div class="tag blue">Apresentação do Projeto</div>
+    <h1>gestao-pro</h1>
+    <p class="subtitle">Plataforma de cadastro de empresas e gestão de cobranças — do upload do boleto à notificação automática via WhatsApp, tudo orquestrado com eventos Kafka e n8n.</p>
+    <div class="cover-badge">
+      <span class="badge">NestJS</span>
+      <span class="badge">Angular</span>
+      <span class="badge">PostgreSQL</span>
+      <span class="badge">Supabase Auth</span>
+      <span class="badge">Kafka / Redpanda</span>
+      <span class="badge">n8n</span>
+      <span class="badge">Docker</span>
+    </div>
+    <div class="grid grid-3" style="margin-top:auto">
+      <div class="card"><div class="card-icon">🏢</div><div class="card-title">Multiorganização</div><div class="card-desc">Suporte a múltiplas organizações com controle de acesso por empresa e por usuário.</div></div>
+      <div class="card"><div class="card-icon">📄</div><div class="card-title">Importação de Boletos</div><div class="card-desc">Upload de PDFs com extração automática de valor e vencimento.</div></div>
+      <div class="card"><div class="card-icon">📲</div><div class="card-title">Cobrança Automatizada</div><div class="card-desc">Disparo via WhatsApp/e-mail orquestrado por n8n através de eventos Kafka.</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: PROBLEMA E SOLUÇÃO -->
+  <div class="slide">
+    <div class="tag green">Contexto</div>
+    <h2>Problema & Solução</h2>
+    <div class="grid grid-2" style="gap:16px">
+      <div>
+        <p style="font-size:13px;color:#888;margin-bottom:12px;font-weight:600;">❌ Sem o sistema</p>
+        <div class="card" style="margin-bottom:10px"><div class="card-title">Processo manual</div><div class="card-desc">Cobranças feitas manualmente por planilhas e ligações, sujeitas a erros e esquecimentos.</div></div>
+        <div class="card" style="margin-bottom:10px"><div class="card-title">Sem rastreabilidade</div><div class="card-desc">Sem histórico centralizado de quem foi cobrado, quando, e com qual resultado.</div></div>
+        <div class="card"><div class="card-title">Dados dispersos</div><div class="card-desc">Contatos, boletos e status espalhados em diferentes ferramentas sem integração.</div></div>
+      </div>
+      <div>
+        <p style="font-size:13px;color:#4caf50;margin-bottom:12px;font-weight:600;">✅ Com o gestao-pro</p>
+        <div class="card" style="margin-bottom:10px"><div class="card-title">Upload e extração automática</div><div class="card-desc">Sobe até 20 boletos PDFs de uma vez — o sistema extrai valor e vencimento automaticamente.</div></div>
+        <div class="card" style="margin-bottom:10px"><div class="card-title">Cobrança via Kafka + n8n</div><div class="card-desc">Disparo assíncrono e rastreável por evento, com resultado de sucesso/falha registrado.</div></div>
+        <div class="card"><div class="card-title">Dashboard unificado</div><div class="card-desc">Visão centralizada de empresas, recebíveis, status de cobrança e contatos ativos.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: FLUXO DE COBRANÇA -->
+  <div class="slide">
+    <div class="tag orange">Fluxo Principal</div>
+    <h2>Como funciona a cobrança</h2>
+    <p class="subtitle">Da importação do PDF ao registro do resultado — 5 etapas totalmente automatizadas.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="flow-step" style="min-width:42px"><span class="num">1</span></div>
+        <div style="flex:1;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:12px 16px">
+          <div style="font-size:13px;font-weight:600;color:#d0d4e0">Upload de PDF</div>
+          <div style="font-size:12px;color:#6a7080;margin-top:3px">Usuário faz upload de até 20 boletos no dashboard Angular. Backend extrai valor e vencimento via leitura de texto do PDF.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="flow-step" style="min-width:42px"><span class="num">2</span></div>
+        <div style="flex:1;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:12px 16px">
+          <div style="font-size:13px;font-weight:600;color:#d0d4e0">Persistência no banco</div>
+          <div style="font-size:12px;color:#6a7080;margin-top:3px">Recebível salvo no PostgreSQL com status <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">pending</code>. Upload duplicado é idempotente via hash SHA-256.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="flow-step" style="min-width:42px"><span class="num">3</span></div>
+        <div style="flex:1;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:12px 16px">
+          <div style="font-size:13px;font-weight:600;color:#d0d4e0">Evento Kafka: receivable.created + charging.requested</div>
+          <div style="font-size:12px;color:#6a7080;margin-top:3px">Backend publica dois eventos: um de criação do recebível e um solicitando cobrança, com contatos da empresa incluídos.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="flow-step" style="min-width:42px"><span class="num">4</span></div>
+        <div style="flex:1;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:12px 16px">
+          <div style="font-size:13px;font-weight:600;color:#d0d4e0">n8n processa e notifica</div>
+          <div style="font-size:12px;color:#6a7080;margin-top:3px">n8n consome o evento do Kafka, escolhe o canal (WhatsApp via Evolution API, e-mail etc.) e realiza a cobrança operacional.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="flow-step" style="min-width:42px"><span class="num">5</span></div>
+        <div style="flex:1;background:#ffffff08;border:1px solid #ffffff10;border-radius:8px;padding:12px 16px">
+          <div style="font-size:13px;font-weight:600;color:#d0d4e0">Resultado registrado</div>
+          <div style="font-size:12px;color:#6a7080;margin-top:3px">n8n publica <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">charging.succeeded</code> ou <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">charging.failed</code>. Backend consome, atualiza o status do recebível para <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">charged</code> e persiste o resultado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: ARQUITETURA -->
+  <div class="slide">
+    <div class="tag blue">Arquitetura</div>
+    <h2>Stack tecnológico</h2>
+    <div class="grid grid-2" style="gap:14px">
+      <div>
+        <p style="font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Backend</p>
+        <div class="stack-row">
+          <div class="pill"><div class="pill-dot" style="background:#e8274b"></div>NestJS (Node.js)</div>
+          <div class="pill"><div class="pill-dot" style="background:#336791"></div>PostgreSQL</div>
+        </div>
+        <div class="stack-row">
+          <div class="pill"><div class="pill-dot" style="background:#3ecf8e"></div>Supabase Auth</div>
+          <div class="pill"><div class="pill-dot" style="background:#ff6b35"></div>Kafka / Redpanda</div>
+        </div>
+        <p style="font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 10px">Frontend</p>
+        <div class="stack-row">
+          <div class="pill"><div class="pill-dot" style="background:#dd0031"></div>Angular</div>
+          <div class="pill"><div class="pill-dot" style="background:#6c8ef5"></div>RLS via NestJS</div>
+        </div>
+        <p style="font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 10px">Orquestração</p>
+        <div class="stack-row">
+          <div class="pill"><div class="pill-dot" style="background:#ea4b71"></div>n8n</div>
+          <div class="pill"><div class="pill-dot" style="background:#25d366"></div>Evolution API (WhatsApp)</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Infraestrutura</p>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">🐳 Docker Compose</div>
+          <div class="card-desc">Dev: Angular :4200 + NestJS :3001 + PostgreSQL :5432 + n8n :5678 + Redpanda :19092 — tudo com hot-reload.</div>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">🌐 Produção (Hostinger VPS)</div>
+          <div class="card-desc">Caddy como único ingress público (80/443). Frontend, backend, banco e n8n na rede interna Docker.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔐 Segurança</div>
+          <div class="card-desc">RLS habilitado + políticas deny-all no Supabase. NestJS é o único boundary de acesso. JWT validado a cada request.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: BANCO DE DADOS -->
+  <div class="slide">
+    <div class="tag purple">Dados</div>
+    <h2>Modelo de dados</h2>
+    <div class="schema-grid">
+      <div class="schema-entity">
+        <div class="entity-name">ORGANIZATIONS</div>
+        <div class="field"><span>id</span><span class="type">uuid PK</span></div>
+        <div class="field"><span>name</span><span class="type">string</span></div>
+        <div class="field"><span>legal_document</span><span class="type">string</span></div>
+        <div class="field"><span>status</span><span class="type">string</span></div>
+      </div>
+      <div class="schema-entity">
+        <div class="entity-name">COMPANIES</div>
+        <div class="field"><span>id</span><span class="type">uuid PK</span></div>
+        <div class="field"><span>organization_id</span><span class="type">FK</span></div>
+        <div class="field"><span>legal_name</span><span class="type">string</span></div>
+        <div class="field"><span>tax_id</span><span class="type">string</span></div>
+        <div class="field"><span>status</span><span class="type">string</span></div>
+      </div>
+      <div class="schema-entity">
+        <div class="entity-name">RECEIVABLES</div>
+        <div class="field"><span>id</span><span class="type">uuid PK</span></div>
+        <div class="field"><span>company_id</span><span class="type">FK</span></div>
+        <div class="field"><span>amount</span><span class="type">numeric</span></div>
+        <div class="field"><span>due_date</span><span class="type">date</span></div>
+        <div class="field"><span>status</span><span class="type">pending→charged</span></div>
+      </div>
+      <div class="schema-entity">
+        <div class="entity-name">COMPANY_CONTACTS</div>
+        <div class="field"><span>contact_type</span><span class="type">email/whatsapp</span></div>
+        <div class="field"><span>contact_value</span><span class="type">string</span></div>
+        <div class="field"><span>is_primary</span><span class="type">boolean</span></div>
+        <div class="field"><span>is_active</span><span class="type">boolean</span></div>
+      </div>
+      <div class="schema-entity">
+        <div class="entity-name">CHARGING_RESULTS</div>
+        <div class="field"><span>event_id</span><span class="type">unique</span></div>
+        <div class="field"><span>receivable_id</span><span class="type">FK</span></div>
+        <div class="field"><span>status</span><span class="type">success/fail</span></div>
+        <div class="field"><span>channel</span><span class="type">string</span></div>
+        <div class="field"><span>failure_reason</span><span class="type">text</span></div>
+      </div>
+      <div class="schema-entity">
+        <div class="entity-name">NOTIFICATION_JOBS</div>
+        <div class="field"><span>receivable_id</span><span class="type">FK</span></div>
+        <div class="field"><span>notification_rule_id</span><span class="type">FK</span></div>
+        <div class="field"><span>status</span><span class="type">string</span></div>
+        <div class="field"><span>kafka_event_id</span><span class="type">string</span></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:#555">+ PROFILES · ORGANIZATION_MEMBERS · USER_COMPANY_ACCESSES · MESSAGE_TEMPLATES · NOTIFICATION_RULES · AUDIT_LOGS</div>
+  </div>
+
+  <!-- SLIDE 6: PAPÉIS E PERMISSÕES -->
+  <div class="slide">
+    <div class="tag green">Segurança</div>
+    <h2>Papéis e controle de acesso</h2>
+    <p class="subtitle">Cada usuário pertence a uma organização com um role. Acesso a empresas é granular e controlado pelo admin.</p>
+    <div class="grid grid-2" style="gap:16px;margin-top:4px">
+      <div class="role-card">
+        <div class="role-name" style="color:#6c8ef5">👑 Admin</div>
+        <div class="role-perm"><span class="check">✓</span> Cria e gerencia usuários da organização</div>
+        <div class="role-perm"><span class="check">✓</span> Acessa todas as empresas (read_write implícito)</div>
+        <div class="role-perm"><span class="check">✓</span> Concede/revoga acesso de usuários a empresas</div>
+        <div class="role-perm"><span class="check">✓</span> Importa boletos e solicita cobranças</div>
+        <div class="role-perm"><span class="check">✓</span> Aciona recobrança manual (1–20 recebíveis)</div>
+        <div class="role-perm"><span class="check">✓</span> Bootstrap inicial do sistema</div>
+      </div>
+      <div class="role-card">
+        <div class="role-name" style="color:#4caf50">👤 User</div>
+        <div class="role-perm"><span class="check">✓</span> Acessa apenas empresas com acesso explícito</div>
+        <div class="role-perm"><span class="check">✓</span> Importa boletos (se tiver read_write)</div>
+        <div class="role-perm"><span class="check">✓</span> Visualiza recebíveis das suas empresas</div>
+        <div class="role-perm"><span class="cross">✗</span> Não cria outros usuários</div>
+        <div class="role-perm"><span class="cross">✗</span> Não vê empresas sem acesso configurado</div>
+        <div class="role-perm"><span class="cross">✗</span> Auto-cadastro não existe — só via admin</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-title">🔒 Níveis de acesso por empresa</div>
+      <div class="card-desc">Cada user pode ter <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">read</code> (visualização) ou <code style="background:#ffffff12;padding:1px 5px;border-radius:3px;font-size:11px">read_write</code> (importação + cobrança) por empresa individualmente.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: PRÓXIMOS PASSOS -->
+  <div class="slide">
+    <div class="tag orange">Roadmap</div>
+    <h2>Limitações conhecidas & próximos passos</h2>
+    <div class="grid grid-2" style="gap:14px">
+      <div>
+        <p style="font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠️ Limitações atuais</p>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">PDFs escaneados</div>
+          <div class="card-desc">Sem OCR ainda — boletos de imagem não são extraídos. Apenas PDFs com texto embutido.</div>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">Kafka não transacional</div>
+          <div class="card-desc">Recebível é salvo e depois o evento é publicado. Falha no Kafka deixa o recebível sem cobrança disparada.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Arquivo PDF não armazenado</div>
+          <div class="card-desc">invoice_file_path fica null — integração com storage ainda não implementada.</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:11px;color:#4caf50;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">🚀 Próximos passos</p>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">Transactional Outbox</div>
+          <div class="card-desc">Garantir que evento Kafka seja publicado mesmo após falha, usando padrão outbox no banco.</div>
+        </div>
+        <div class="card" style="margin-bottom:10px">
+          <div class="card-title">OCR para boletos escaneados</div>
+          <div class="card-desc">Integrar extração por imagem para suportar boletos digitalizados.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Storage de PDFs</div>
+          <div class="card-desc">Integrar Supabase Storage ou S3 para persistir os arquivos originais dos boletos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let current = 0;
+  const total = 7;
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  const countEl = document.getElementById('count');
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  }
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    countEl.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>
+</body>
+</html>
